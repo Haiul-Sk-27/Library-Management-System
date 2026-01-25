@@ -1,11 +1,19 @@
 package Library.Management.System.com.example.Service.impl;
 
+import Library.Management.System.com.example.Exception.GenreException;
 import Library.Management.System.com.example.Service.GenreService;
+import Library.Management.System.com.example.mapper.GenreMapper;
 import Library.Management.System.com.example.modal.Genre;
 import Library.Management.System.com.example.payload.dto.GenreDTO;
 import Library.Management.System.com.example.repository.GenreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Nodes.collect;
+
 
 @Service
 @RequiredArgsConstructor
@@ -16,8 +24,6 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public GenreDTO createGenre(GenreDTO genreDTO) {
 //        return genreRepository.save(genreDTO);
-
-
 
         Genre genre = Genre.builder()
                 .code(genreDTO.getCode())
@@ -33,26 +39,64 @@ public class GenreServiceImpl implements GenreService {
         }
 
         Genre savedGenre = genreRepository.save(genre);
-        GenreDTO dto = GenreDTO.builder()
-                .id(savedGenre.getId())
-                .code(savedGenre.getName())
-                .description(savedGenre.getDescription())
-                .displayOrder(savedGenre.getDisplayOrder())
-                .active(savedGenre.getActive())
-                .createAt(savedGenre.getCreatedAt())
-                .updatedAt(savedGenre.getUpdateAt())
-                .build();
+        GenreDTO dto = GenreMapper.toDTO(savedGenre);
 
-        if(savedGenre.getParentGenre() != null){
-            dto.setParentGenreId(savedGenre.getParentGenre().getId());
-            dto.setParentGenreId(savedGenre.getParentGenre().getName());
-        }
-
-//        dto.setSubGenre(savedGenre.getSubGenre().stream()
-//                .filter(subGenre->subGenre.getActive())
-//                .map(subGenre->));
-
-//        dto.setBookCount((long)(savedGenre.getBook));
-        return  null;
+        return  dto;
     }
+
+    @Override
+    public List<GenreDTO> getAllGenres() {
+        return GenreRepository.findAll().stream()
+                .map(Genre->GenreMapper::toDTO(Genre))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public GenreDTO getGenreById(Long genreId) throws Exception {
+        Genre genre =  genreRepository.findById(genreId).orElseThrow(
+                ()-> new GenreException("Genre Not found")
+                );
+
+        return GenreMapper.toDTO(genre);
+    }
+
+    @Override
+    public GenreDTO updateGenre(Long genreId, GenreDTO genre) {
+
+        Genre existingGenre = genreRepository.findById(genreId).orElseThrow(
+                ()->new GenreException("Genre not found")
+        );
+        return null;
+    }
+
+    @Override
+    public void deleteGenre(Long genreId) {
+
+    }
+
+    @Override
+    public void hardDeleteGenre(Long genreId) {
+
+    }
+
+    @Override
+    public List<GenreDTO> getAllActiveGenresWithSubGentes() {
+        return List.of();
+    }
+
+    @Override
+    public List<GenreDTO> getTopLevelGenres() {
+        return List.of();
+    }
+
+    @Override
+    public long getTopActivesGenres() {
+        return 0;
+    }
+
+    @Override
+    public long getBookCountByGenres(Long genreId) {
+        return 0;
+    }
+
 }
