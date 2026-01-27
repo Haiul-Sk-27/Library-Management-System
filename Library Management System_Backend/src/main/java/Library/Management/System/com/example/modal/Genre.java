@@ -42,8 +42,8 @@ public class Genre {
     @ManyToOne
     private Genre parentGenre;
 
-    @OneToMany
-    private List<Genre> subGenre = new ArrayList<Genre>();
+    @OneToMany(mappedBy = "parentGenre")
+    private List<Genre> subGenre = new ArrayList<>();
 
 //    @OneToMany(mappedBy = "genre",cascade = CascadeType.PERSIST)
 //    private List<Book> books = new ArrayList<Book>();

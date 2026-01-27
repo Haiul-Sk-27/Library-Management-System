@@ -1,7 +1,7 @@
 package Library.Management.System.com.example.controller;
 
 import Library.Management.System.com.example.Service.GenreService;
-import Library.Management.System.com.example.modal.Genre;
+
 import Library.Management.System.com.example.payload.dto.GenreDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

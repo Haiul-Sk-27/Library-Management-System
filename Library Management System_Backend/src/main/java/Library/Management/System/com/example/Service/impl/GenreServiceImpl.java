@@ -12,32 +12,16 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Nodes.collect;
-
-
 @Service
 @RequiredArgsConstructor
 public class GenreServiceImpl implements GenreService {
 
     private final GenreRepository genreRepository;
+    private final GenreMapper genreMapper;
 
     @Override
     public GenreDTO createGenre(GenreDTO genreDTO) {
-//        return genreRepository.save(genreDTO);
-
-        Genre genre = Genre.builder()
-                .code(genreDTO.getCode())
-                .name(genreDTO.getName())
-                .description(genreDTO.getDescription())
-                .displayOrder(genreDTO.getDisplayOrder())
-                .active(true)
-                .build();
-
-        if (genreDTO.getParentGenreId() != null){
-            Genre parentGenre = genreRepository.findById(genreDTO.getParentGenreId()).get();
-            genre.setParentGenre(parentGenre);
-        }
-
+        Genre genre = genreMapper.toEntity(genreDTO);
         Genre savedGenre = genreRepository.save(genre);
         GenreDTO dto = GenreMapper.toDTO(savedGenre);
 
@@ -46,8 +30,8 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public List<GenreDTO> getAllGenres() {
-        return GenreRepository.findAll().stream()
-                .map(Genre->GenreMapper::toDTO(Genre))
+        return genreRepository.findAll().stream()
+                .map(GenreMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -61,42 +45,60 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public GenreDTO updateGenre(Long genreId, GenreDTO genre) {
+    public GenreDTO updateGenre(Long genreId, GenreDTO genreDTO) {
 
         Genre existingGenre = genreRepository.findById(genreId).orElseThrow(
                 ()->new GenreException("Genre not found")
         );
-        return null;
+
+        genreMapper.updateEntityFromDTO(genreDTO,existingGenre);
+        Genre updateGenre = genreRepository.save(existingGenre);
+        return genreMapper.toDTO(updateGenre);
     }
 
     @Override
     public void deleteGenre(Long genreId) {
 
+        Genre existingGenre = genreRepository.findById(genreId).orElseThrow(
+                ()->new GenreException("Genre not found")
+        );
+
+        existingGenre.setActive(false);
+        genreRepository.save(existingGenre);
     }
 
     @Override
     public void hardDeleteGenre(Long genreId) {
+        Genre existingGenre = genreRepository.findById(genreId).orElseThrow(
+                ()->new GenreException("Genre not found")
+        );
 
+        genreRepository.delete(existingGenre);
     }
 
     @Override
     public List<GenreDTO> getAllActiveGenresWithSubGentes() {
-        return List.of();
+
+        List<Genre> topLevelGenres = genreRepository.findByParentGenreIsNullAndActiveTrueOrderByDisplayOrderAsc();
+        return genreMapper.toDTOList(topLevelGenres);
     }
 
     @Override
     public List<GenreDTO> getTopLevelGenres() {
-        return List.of();
+        List<Genre> topLevelGenres = genreRepository.findByParentGenreIsNullAndActiveTrueOrderByDisplayOrderAsc();
+        return genreMapper.toDTOList(topLevelGenres);
     }
 
     @Override
     public long getTopActivesGenres() {
-        return 0;
+
+        return genreRepository.countByActiveTrue();
     }
 
     @Override
     public long getBookCountByGenres(Long genreId) {
-        return 0;
+
+        return genreRepository.countBooksByGenre(genreId);
     }
 
 }
