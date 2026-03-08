@@ -15,6 +15,6 @@ public interface GenreService {
     List<GenreDTO> getAllActiveGenresWithSubGentes();
     List<GenreDTO> getTopLevelGenres();
    // Page<GenreDTO> searchingGenres(String searchTerm, Pageable pageable)
-    long getTopActivesGenres();
+    long getTotalActivesGenres();
     long getBookCountByGenres(Long genreId);
 }

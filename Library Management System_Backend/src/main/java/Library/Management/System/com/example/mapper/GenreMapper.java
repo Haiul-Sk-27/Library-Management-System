@@ -77,10 +77,12 @@ public class GenreMapper {
         existingGenre.setCode(dto.getCode());
         existingGenre.setName(dto.getName());
         existingGenre.setDescription(dto.getDescription());
+
         existingGenre.setDisplayOrder(dto.getDisplayOrder() != null ? dto.getDisplayOrder():0);
         if(dto.getActive() != null){
-            genre.setActive(dto.getActive());
+            existingGenre.setActive(dto.getActive());
         }
+
         if(dto.getParentGenreId() != null){
             genreRepository.findById(dto.getParentGenreId())
                     .ifPresent(existingGenre::setParentGenre);

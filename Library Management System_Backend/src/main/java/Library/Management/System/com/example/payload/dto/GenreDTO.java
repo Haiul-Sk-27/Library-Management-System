@@ -27,7 +27,7 @@ public class GenreDTO {
 
     private Integer displayOrder =0;
 
-    private  boolean active;
+    private Boolean active;
 
     private Long parentGenreId;
 
