@@ -18,37 +18,44 @@ import java.time.LocalDateTime;
 @Builder
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true, length = 20)
     private String isbn;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 255)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 255)
     private String author;
 
-    @JoinColumn(nullable = false)
-    @ManyToOne
-    private String genre;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "genre_id", nullable = false)
+    private Genre genre;
+
+
+    @Column(length = 100)
     private String publisher;
 
-    private LocalDate publishedDate;
+    private LocalDate publicationDate;
 
+    @Column(length = 20)
     private String language;
 
     private Integer pages;
 
+    @Column(length = 2000)
     private String description;
+
 
     @Column(nullable = false)
     private Integer totalCopies;
 
     private Integer availableCopies;
 
+    @Column(precision = 10, scale = 2)
     private BigDecimal price;
 
     private String coverImage;
@@ -57,14 +64,15 @@ public class Book {
     private Boolean active = true;
 
     @CreationTimestamp
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @AssertTrue(message = "Availabke copies can not total copies")
-    public boolean isAvailableCopies(){
-        if(totalCopies == null || availableCopies ==null){
+
+    public @AssertTrue boolean isAvailableCopiesValid(Book book) {
+        if (totalCopies == null || availableCopies == null) {
             return true;
         }
         return availableCopies <= totalCopies;
