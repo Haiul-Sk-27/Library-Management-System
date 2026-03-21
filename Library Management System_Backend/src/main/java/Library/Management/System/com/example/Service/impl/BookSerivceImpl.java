@@ -5,7 +5,7 @@ import Library.Management.System.com.example.Service.BookService;
 import Library.Management.System.com.example.mapper.BookMapper;
 import Library.Management.System.com.example.modal.Book;
 import Library.Management.System.com.example.payload.dto.BookDTO;
-import Library.Management.System.com.example.payload.response.BookSearchRequest;
+import Library.Management.System.com.example.payload.request.BookSearchRequest;
 import Library.Management.System.com.example.payload.response.PageResponse;
 import Library.Management.System.com.example.repository.BookRepository;
 import lombok.RequiredArgsConstructor;

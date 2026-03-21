@@ -2,7 +2,7 @@ package Library.Management.System.com.example.Service;
 
 import Library.Management.System.com.example.Exception.BookException;
 import Library.Management.System.com.example.payload.dto.BookDTO;
-import Library.Management.System.com.example.payload.response.BookSearchRequest;
+import Library.Management.System.com.example.payload.request.BookSearchRequest;
 import Library.Management.System.com.example.payload.response.PageResponse;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package Library.Management.System.com.example.payload.response;
+package Library.Management.System.com.example.payload.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
