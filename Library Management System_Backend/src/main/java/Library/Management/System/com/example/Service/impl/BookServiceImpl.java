@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class BookSerivceImpl implements BookService {
+public class BookServiceImpl implements BookService {
 
     private  final BookRepository bookRepository;
     private  final BookMapper bookMapper;

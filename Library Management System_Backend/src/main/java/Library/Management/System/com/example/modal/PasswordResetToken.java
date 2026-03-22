@@ -1,5 +1,6 @@
 package Library.Management.System.com.example.modal;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,13 +19,14 @@ public class PasswordResetToken {
     @Column(nullable = false,unique = true)
     private String token;
     @ManyToOne
-    @Column(name = "user_id",nullable = false)
+    @JoinColumn(name = "user_id",nullable = false)
     private User user;
     @Column(nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime expiryDate;
 
     public boolean isExpired(){
-        return expiryDate.isBefore(LocalDateTime.now())
+        return expiryDate.isBefore(LocalDateTime.now());
     }
 
 }

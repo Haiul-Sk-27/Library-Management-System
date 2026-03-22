@@ -13,5 +13,4 @@ public class AuthResponse {
     private String message;
     private String title;
     private UserDTO user;
-
 }

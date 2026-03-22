@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -31,15 +34,25 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> loginHandler(
             @RequestBody @Valid LoginRequest req
-    ){
+    ) throws UserException {
         AuthResponse res =authService.login(req.getUserName(),req.getPassword());
         return  ResponseEntity.ok(res);
     }
 
-    @PostMapping("/reset-passord")
+    @PostMapping("/forgot-password")
+    public ResponseEntity<Map<String, String>> forgotPassword(@RequestBody Map<String, String> request) throws UserException {
+        String email = request.get("email");
+        authService.createPasswordResetToken(email);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Password reset token sent to email: " + email);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/reset-password")
     public ResponseEntity<ApiResponse>resetPassword(
             @RequestBody ResetPasswordRequest req
-            ){
+            ) throws UserException {
         authService.resetPassword(req.getToken(),req.getPassword());
         ApiResponse res = new ApiResponse("Password reset succesfull",true);
         return ResponseEntity.ok(res);

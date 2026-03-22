@@ -1,10 +1,18 @@
 package Library.Management.System.com.example.configration;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.crypto.SecretKey;
@@ -16,31 +24,42 @@ public class JwtValidator extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException{
+                                    FilterChain filterChain)
+            throws ServletException, IOException {
 
         String jwt = request.getHeader(JwtConstant.JWT_HEADER);
 
-        //Bearer
-        if(jwt != null){
+        if (jwt != null && jwt.startsWith("Bearer ")) {
             jwt = jwt.substring(7);
 
-            try{
-                SecretKey keys=keys.hmaShakeyFor(JwtConstant.SECRET_KEY.getBytes());
-                Claims claims = Jwts.parser().verifyWith(key).build()
-                        .parseSignedClaims(jwt).getPayload();
+            try {
+                SecretKey key =
+                        Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
 
-                String email = claims.valueOf(claims.get("email"));
-                String authories = String.valueOf(claims.get('authorites'));
-                List<GrandAuthority> authoritiesList = AuthorityUtils
-                        .commaSeparatedStringToAuthority(authories);
+                Claims claims = Jwts.parserBuilder()
+                        .setSigningKey(key)
+                        .build()
+                        .parseClaimsJws(jwt)
+                        .getBody();
 
-                Authentication auth = new UserNamePasswordAuthenticationToken(
-                        email.getSubject(),null,authoritiesList);
+                String email = claims.get("email", String.class);
+                String authoritiesStr =
+                        claims.get("authorities", String.class);
+
+                List<GrantedAuthority> authorities =
+                        AuthorityUtils.commaSeparatedStringToAuthorityList(authoritiesStr);
+
+                Authentication auth =
+                        new UsernamePasswordAuthenticationToken(
+                                email, null, authorities);
+
                 SecurityContextHolder.getContext().setAuthentication(auth);
-            }catch (Exception e){
-                throw  new BadCredentialsExpection("Invalid.... JWT Token");
+
+            } catch (Exception e) {
+                throw new BadCredentialsException("Invalid JWT token", e);
             }
-            filterChain.doFilter(request,response);
         }
+
+        filterChain.doFilter(request, response);
     }
 }
