@@ -1,0 +1,48 @@
+package Library.Management.System.com.example.payload.dto;
+
+import Library.Management.System.com.example.modal.SubscriptionPlan;
+import Library.Management.System.com.example.modal.User;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class SubcriptionDTO {
+    private Long id;
+
+    @NotNull(message = "UserId is mandatory")
+    private User userId;
+    private String userName;
+    private String userEmail;
+    @NotNull(message = "Subcription paln id is mandatory")
+    private Long planId;
+    private String planName;
+    private String planCode;
+    private Long price;
+    private String currency;
+    private Double priceInMajorUnits;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private Boolean isActive;
+    private Integer maxBooksAllowed;
+    private Integer maxDayPerBook;
+    private Boolean autoRenew;
+    private LocalDateTime cancelledAt;
+    private String cancellationReason;
+    private String notes;
+    private Long daysRemaining;
+    private Boolean isValid;
+    private Boolean isExpired;
+    private LocalDateTime createdAt;
+    private LocalDateTime updateAt;
+}
