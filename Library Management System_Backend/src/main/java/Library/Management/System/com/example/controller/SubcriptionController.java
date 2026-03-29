@@ -1,7 +1,8 @@
 package Library.Management.System.com.example.controller;
 
-import Library.Management.System.com.example.Service.SubcriptionService;
-import Library.Management.System.com.example.payload.dto.SubcriptionDTO;
+import Library.Management.System.com.example.Exception.SubscriptionExpection;
+import Library.Management.System.com.example.Service.SubscriptionService;
+import Library.Management.System.com.example.payload.dto.SubscriptionDTO;
 import Library.Management.System.com.example.payload.response.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,63 +18,66 @@ import java.util.List;
 @RequestMapping("/api/subscriptions")
 public class SubcriptionController {
 
-    private final SubcriptionService subcriptionService;
+    private final SubscriptionService subscriptionService;
 
-    @PostMapping("/subscribe")
-    public ResponseEntity<?> subscription(
-            @Valid @ResponseBody SubcriptionDTO subscription
-            ){
-        SubcriptionDTO dto = subcriptionService.subcribe(subscription);
+
+    @PostMapping()
+    public ResponseEntity<SubscriptionDTO> subscription(
+            @Valid @RequestBody SubscriptionDTO subscription
+    ) throws Exception {
+        SubscriptionDTO dto = subscriptionService.subscribe(subscription);
         return ResponseEntity.ok(dto);
     }
 
-    @GetMapping("/user/active")
-    public ResponseEntity<?> getUsersActiveSubcriptions(
-            @RequestParam(required = false) Long userId
-    ){
-        int page = 0;
-        int size = 10;
-        Pageable pageable = PageRequest.of(page,size);
-        List<SubcriptionDTO> dtoList = SubcriptionService.getUserActiveSubcription(pageable);
-        return ResponseEntity.ok(dtoList);
+    @GetMapping("/active/{userId}")
+    public ResponseEntity<SubscriptionDTO> getUserActiveSubcription(
+            @PathVariable Long userId
+    ) throws SubscriptionExpection {
+        SubscriptionDTO dto =
+                subscriptionService.getUserActiveSubscription(userId);
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/admin")
-    public ResponseEntity<?> getAllSubscriptions(){
-        int page = 0;
-        int size = 10;
-        Pageable pageable = PageRequest.of(page,size);
-        List<SubcriptionDTO> dtoList = subcriptionService.getAllSubscriptions(pageable);
+    public ResponseEntity<List<SubscriptionDTO>> getAllSubscriptions(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        List<SubscriptionDTO> dtoList =
+                subscriptionService.getAllSubscriptions(pageable);
         return ResponseEntity.ok(dtoList);
     }
 
-    @GetMapping("/admin/deactive-expired")
-    public ResponseEntity<?> deactiveExpiredSubscriptions(){
-        int page = 0;
-        int size = 10;
+    @GetMapping("/admin/deactivate-expired")
+    public ResponseEntity<ApiResponse> deactivateExpiredSubscriptions() {
 
-        Pageable pageable = PageRequest.of(page,size);
-        subcriptionService.deactivateExpiredSubscriptions();
-        ApiResponse res = new ApiResponse("Task is done!",true);
+        subscriptionService.deactivateExpiredSubscriptions();
+
+        ApiResponse res = new ApiResponse(
+                "Expired subscriptions deactivated successfully",
+                true
+        );
         return ResponseEntity.ok(res);
     }
 
-    @PostMapping("/cancel/{subscriptionId}")
-    public ResponseEntity<?> cancelSubscription(
+    @DeleteMapping("/cancel/{subscriptionId}/{userId}")
+    public ResponseEntity<SubscriptionDTO> cancelSubscription(
             @PathVariable Long subscriptionId,
-            @RequestMapping(required = false) String reason
-    ){
-        SubcriptionDTO subscription = subcriptionService
-                .cancelSubscription(subscriptionId,reason);
+            @RequestParam Long userId
+    ) throws Throwable {
+        SubscriptionDTO subscription =
+                subscriptionService.cancelSubscription(subscriptionId, userId);
         return ResponseEntity.ok(subscription);
     }
 
-    @PostMapping("/active")
-    public ResponseEntity<?> activeSubscription(
+    @PostMapping("/activate")
+    public ResponseEntity<SubscriptionDTO> activateSubscription(
             @RequestParam Long subscriptionId,
             @RequestParam Long paymentId
-    ){
-        SubcriptionDTO subscription = subcriptionService.activeSubcription(subscriptionId,paymentId);
+    ) throws SubscriptionExpection {
+        SubscriptionDTO subscription =
+                subscriptionService.activateSubscription(subscriptionId, paymentId);
         return ResponseEntity.ok(subscription);
     }
 }

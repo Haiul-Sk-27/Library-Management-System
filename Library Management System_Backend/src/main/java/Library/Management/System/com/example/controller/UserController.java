@@ -25,7 +25,7 @@ public class UserController {
         );
     }
 
-    @PostMapping("/profile")
+    @GetMapping("/profile")
     public ResponseEntity<User> getUserProfile() throws Exception {
         return ResponseEntity.ok(
                 userService.getCurrentUser()

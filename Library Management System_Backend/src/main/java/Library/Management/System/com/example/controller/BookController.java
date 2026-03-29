@@ -20,6 +20,14 @@ public class BookController {
 
     private final BookService bookService;
 
+    @PostMapping
+    public ResponseEntity<BookDTO> createbook(
+            @RequestBody BookDTO bookDTO
+    ) throws BookException {
+        BookDTO createBook = bookService.createBook(bookDTO);
+        return new ResponseEntity<>(createBook,HttpStatus.CREATED);
+    }
+
     @PostMapping("/bulk")
     public ResponseEntity<List<BookDTO>> createBooksBulk(
             @Valid @RequestBody List<BookDTO> bookDTOS
@@ -44,7 +52,7 @@ public class BookController {
         BookDTO book = bookService.getBookByISBN(isbn);
         return ResponseEntity.ok(book);
     }
-    @PutMapping("/{id}")
+    @PutMapping("/updateBook/{id}")
     public ResponseEntity<BookDTO> updateBook(
             @PathVariable Long id,
             @Valid @RequestBody BookDTO bookDTO

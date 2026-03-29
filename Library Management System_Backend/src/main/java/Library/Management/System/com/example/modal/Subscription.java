@@ -16,14 +16,14 @@ import java.time.temporal.ChronoUnit;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Subcription {
+public class Subscription {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne
@@ -35,6 +35,7 @@ public class Subcription {
     private String planCode;
 
     private Long price;
+    private String currency;
 
     @Column(nullable = false)
     private Integer maxBooksAllowed;
@@ -64,6 +65,11 @@ public class Subcription {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    public Double getPriceInMajorUnits() {
+        if (price == null) return null;
+        return price / 100.0;
+    }
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @UpdateTimestamp
     @Column(nullable = false)
@@ -91,12 +97,12 @@ public class Subcription {
 
     public  void calculateEndDate(){
         if(plan != null && startDate != null){
-            this.endDate = startDate.plusDays(plan.getDurationDays())
+            this.endDate = startDate.plusDays(plan.getDurationDays());
         }
     }
 
-    public void inirialzeFromPlan(){
-        if(plan == null){
+    public void initializeFromPlan(){
+        if(plan != null){
             this.planName =plan.getName();
             this.planCode = plan.getPlancode();
             this.price = plan.getPrice();
@@ -107,4 +113,5 @@ public class Subcription {
             }
         }
     }
+
 }

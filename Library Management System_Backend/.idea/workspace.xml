@@ -5,10 +5,40 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d9ee248f-f1bb-4947-9f9d-ce6c07cad7f4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/Service/PaymentService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/Service/SubscriptionService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/Service/impl/SubscriptionServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/domain/PaymentGateway.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/domain/PaymentStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/domain/PaymentType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/mapper/SubscriptionMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/modal/Payment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/payload/request/PaymentInititedRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/payload/response/PaymentInitiatedResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/Exception/SubcriptionExpection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/Exception/SubscriptionExpection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/Service/SubcriptionService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/Service/SubscriptionPlanService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/Service/SubscriptionPlanService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/Service/impl/SubcriptionImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/Service/impl/SubscriptionPlanServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/Service/impl/SubscriptionPlanServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/controller/BookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/controller/BookController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/controller/SubcriptionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/controller/SubcriptionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/controller/SubcriptionPlanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/controller/SubscriptionPlanController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/mapper/SubcriptionMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/mapper/SubscriptionPlanMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/mapper/SubscriptionPlanMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/modal/Subcription.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/modal/Subscription.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/payload/dto/BookDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/payload/dto/BookDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/payload/dto/SubcriptionDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/payload/dto/SubscriptionDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/payload/dto/SubscriptionPlanDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/payload/dto/SubscriptionPlanDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/repository/SubcriptionPlanRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/repository/SubcriptionPlanRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/repository/SubcriptionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Library/Management/System/com/example/repository/SubscriptionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Library/Management/System/com/example/configration/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Library/Management/System/com/example/configration/SecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Library/Management/System/com/example/controller/BookController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Library/Management/System/com/example/controller/BookController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Library/Management/System/com/example/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Library/Management/System/com/example/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Library/Management/System/com/example/payload/dto/BookDTO$BookDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Library/Management/System/com/example/payload/dto/BookDTO$BookDTOBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Library/Management/System/com/example/payload/dto/BookDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Library/Management/System/com/example/payload/dto/BookDTO.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,6 +95,9 @@
 }</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="Library.Management.System.com.example.payload.request" />
+      <recent name="Library.Management.System.com.example.payload.response" />
+      <recent name="Library.Management.System.com.example.domain" />
       <recent name="Library.Management.System.com.example.payload.dto" />
     </key>
   </component>

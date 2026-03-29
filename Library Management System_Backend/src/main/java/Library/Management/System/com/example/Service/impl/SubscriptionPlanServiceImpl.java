@@ -2,6 +2,7 @@ package Library.Management.System.com.example.Service.impl;
 
 import Library.Management.System.com.example.Service.SubscriptionPlanService;
 import Library.Management.System.com.example.Service.UserService;
+import Library.Management.System.com.example.mapper.SubscriptionPlanMapper;
 import Library.Management.System.com.example.modal.SubscriptionPlan;
 import Library.Management.System.com.example.modal.User;
 import Library.Management.System.com.example.payload.dto.SubscriptionPlanDTO;
@@ -17,48 +18,52 @@ import java.util.stream.Collectors;
 public class SubscriptionPlanServiceImpl implements SubscriptionPlanService {
 
     private final SubcriptionPlanRepository planRepository;
-    private final SubscriptionPlan planMapper;
+    private final SubscriptionPlanMapper planMapper;
     private final UserService userService;
     @Override
     public SubscriptionPlanDTO createSubscriptionPlan(SubscriptionPlanDTO planDTO) throws Exception {
-        if(planRepository.existsByPlanCode(planDTO.getPlancode())){
-            throw  new Exception("Plan code is alredy exists");
+        if(planRepository.existsByPlancode(planDTO.getPlancode())){
+            throw new Exception("Plan code already exists");
         }
 
-        SubscriptionPlan plan =planMapper.toEntity(planDTO);
+        SubscriptionPlan plan = planMapper.toEntity(planDTO);
         User currentUser = userService.getCurrentUser();
         plan.setCreatedBy(currentUser.getFullName());
         plan.setUpdatedBy(currentUser.getFullName());
+
         SubscriptionPlan savedPlan = planRepository.save(plan);
         return planMapper.toDTO(savedPlan);
     }
 
     @Override
-    public SubscriptionPlanDTO updateSubscriptionPlan(Long planId) throws Exception {
-
+    public SubscriptionPlanDTO updateSubscriptionPlan(Long planId, SubscriptionPlanDTO planDTO) throws Exception {
         SubscriptionPlan existingPlan = planRepository.findById(planId).orElseThrow(
-                ()->new Exception("Plan not found")
+                () -> new Exception("Plan not found")
         );
-        planMapper.updateEntity(existingPlan,planDTO);
+
+        planMapper.updateEntity(existingPlan, planDTO);
+
         User currentUser = userService.getCurrentUser();
         existingPlan.setUpdatedBy(currentUser.getFullName());
-        SubscriptionPlan updatePlan = planRepository.save(existingPlan);
-        return planMapper.toDTO(updatePlan);
+
+        SubscriptionPlan updatedPlan = planRepository.save(existingPlan);
+        return planMapper.toDTO(updatedPlan);
     }
 
     @Override
-    public void deleteSubccriptionPlan(Long palaId) {
+    public void deleteSubscriptionPlan(Long planId) {
         SubscriptionPlan existingPlan = planRepository.findById(planId).orElseThrow(
-                ()->new Exception("Plan not found")
+                () -> new RuntimeException("Plan not found")
         );
+
         planRepository.delete(existingPlan);
     }
 
     @Override
     public List<SubscriptionPlanDTO> getAllSubcriptionPlan() {
         List<SubscriptionPlan> planList = planRepository.findAll();
-        return planList.stream().map(
-               planMapper::toDTO
-        ).collect(Collectors.toList());
+        return planList.stream()
+                .map(planMapper::toDTO)
+                .collect(Collectors.toList());
     }
 }

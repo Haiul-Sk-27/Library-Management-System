@@ -1,15 +1,10 @@
 package Library.Management.System.com.example.payload.dto;
 
-import Library.Management.System.com.example.modal.SubscriptionPlan;
 import Library.Management.System.com.example.modal.User;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,11 +12,12 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SubcriptionDTO {
+public class SubscriptionDTO {
+
     private Long id;
 
     @NotNull(message = "UserId is mandatory")
-    private User userId;
+    private Long userId;
     private String userName;
     private String userEmail;
     @NotNull(message = "Subcription paln id is mandatory")

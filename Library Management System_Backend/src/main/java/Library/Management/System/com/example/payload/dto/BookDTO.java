@@ -1,5 +1,6 @@
 package Library.Management.System.com.example.payload.dto;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
@@ -60,7 +61,8 @@ public class BookDTO {
 
     private String coverImage;
 
-    private Boolean active = true;
+    @Column(nullable = false)
+    private Boolean active;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

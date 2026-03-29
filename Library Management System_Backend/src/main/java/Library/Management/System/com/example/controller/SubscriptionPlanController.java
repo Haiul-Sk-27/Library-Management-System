@@ -13,39 +13,41 @@ import java.util.List;
 @RequestMapping("/api/subscription-plans")
 @RestController
 @RequiredArgsConstructor
-public class SubcriptionPlanController {
+public class SubscriptionPlanController {
 
     private final SubscriptionPlanService subscriptionPlanService;
 
+    // GET all subscription plans
     @GetMapping
-    public ResponseEntity<?> getAllSuncriptionPlans(){
+    public ResponseEntity<List<SubscriptionPlanDTO>> getAllSubscriptionPlans() {
         List<SubscriptionPlanDTO> plans = subscriptionPlanService.getAllSubcriptionPlan();
         return ResponseEntity.ok(plans);
     }
 
+    // CREATE a subscription plan
     @PostMapping("/admin/create")
-    public ResponseEntity<?> getAllSubcriptionPlans(
+    public ResponseEntity<SubscriptionPlanDTO> createSubscriptionPlan(
             @Valid @RequestBody SubscriptionPlanDTO subscriptionPlanDTO
-            ) throws Exception {
-        SubscriptionPlanDTO plans = subscriptionPlanService.createSubscriptionPlan(subscriptionPlanDTO)
-        return ResponseEntity.ok(plans);
+    ) throws Exception {
+        SubscriptionPlanDTO plan = subscriptionPlanService.createSubscriptionPlan(subscriptionPlanDTO);
+        return ResponseEntity.ok(plan);
     }
 
+    // UPDATE a subscription plan
     @PutMapping("/admin/{id}")
-    public ResponseEntity<?> updateSubcriptionPlan(
+    public ResponseEntity<SubscriptionPlanDTO> updateSubscriptionPlan(
             @Valid @RequestBody SubscriptionPlanDTO subscriptionPlanDTO,
-            @PathVariable long id
-    ){
-        SubscriptionPlanDTO plans = subscriptionPlanService.updateSubscriptionPlan(id,subscriptionPlanDTO);
-        return ResponseEntity.ok(plans);
+            @PathVariable Long id
+    ) throws Exception {
+        SubscriptionPlanDTO plan = subscriptionPlanService.updateSubscriptionPlan(id, subscriptionPlanDTO);
+        return ResponseEntity.ok(plan);
     }
 
+    // DELETE a subscription plan
     @DeleteMapping("/admin/{id}")
-    public ResponseEntity<?> deleteSuncriptionPlan(
-            @PathVariable long id
-    ){
-        SubscriptionPlanService.deleteSubccriptionPlan(id);
-        ApiResponse res = new ApiResponse("Plan deleted SuccessFully",true);
+    public ResponseEntity<ApiResponse> deleteSubscriptionPlan(@PathVariable Long id) {
+        subscriptionPlanService.deleteSubscriptionPlan(id);
+        ApiResponse res = new ApiResponse("Plan deleted successfully", true);
         return ResponseEntity.ok(res);
     }
 }
