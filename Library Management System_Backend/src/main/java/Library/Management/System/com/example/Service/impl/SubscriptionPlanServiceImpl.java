@@ -20,6 +20,7 @@ public class SubscriptionPlanServiceImpl implements SubscriptionPlanService {
     private final SubcriptionPlanRepository planRepository;
     private final SubscriptionPlanMapper planMapper;
     private final UserService userService;
+
     @Override
     public SubscriptionPlanDTO createSubscriptionPlan(SubscriptionPlanDTO planDTO) throws Exception {
         if(planRepository.existsByPlancode(planDTO.getPlancode())){
@@ -65,5 +66,15 @@ public class SubscriptionPlanServiceImpl implements SubscriptionPlanService {
         return planList.stream()
                 .map(planMapper::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public SubscriptionPlan getBySuncriptionPlanCode(String subscriptionPlanCode) throws Exception {
+        SubscriptionPlan plan = planRepository.findByCode(subscriptionPlanCode);
+        if(plan == null){
+            throw  new Exception("Plan not found");
+        }
+
+        return  plan;
     }
 }

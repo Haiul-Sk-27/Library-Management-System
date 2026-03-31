@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 
 @Email
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Builder
 @Getter
 @Setter
@@ -31,13 +30,13 @@ public class Payment {
 
     private PaymentType paymentType;
 
-    private PaymentStatus paymentStatus;
+    private PaymentStatus status;
 
     @Enumerated(EnumType.STRING)
     private PaymentGateway gateway;
 
     private Long amout;
-
+    private String bookLoan;
     private String transactionId;
     private String gatewayPaymentId;
     private String getwayOrderId;

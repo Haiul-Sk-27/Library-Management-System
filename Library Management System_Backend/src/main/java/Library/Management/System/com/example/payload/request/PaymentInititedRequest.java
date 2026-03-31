@@ -3,17 +3,14 @@ package Library.Management.System.com.example.payload.request;
 import Library.Management.System.com.example.domain.PaymentGateway;
 import Library.Management.System.com.example.domain.PaymentStatus;
 import Library.Management.System.com.example.domain.PaymentType;
-import Library.Management.System.com.example.modal.Subscription;
-import Library.Management.System.com.example.modal.User;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.time.LocalDateTime;
-
+@Getter
+@Setter
 public class PaymentInititedRequest {
 
     @NotNull(message = "User id is mandatory")
@@ -37,4 +34,12 @@ public class PaymentInititedRequest {
 
     @Size(max = 500,message = "Description must not exceed 500 characters")
     private String description;
+
+    private Long fineId;
+
+    private Long subscriptionId;
+    @Size(max = 500,message = "Success URL must not exceed 500 characters")
+    private String successUrl;
+    @Size(max = 500,message = "Cancel url msut not exceed 500 characters")
+    private String cancelUrl;
 }

@@ -1,5 +1,6 @@
 package Library.Management.System.com.example.Service;
 
+import Library.Management.System.com.example.modal.SubscriptionPlan;
 import Library.Management.System.com.example.payload.dto.SubscriptionPlanDTO;
 import java.util.List;
 
@@ -15,4 +16,5 @@ public interface SubscriptionPlanService {
     void deleteSubscriptionPlan(Long planId);
 
     List<SubscriptionPlanDTO> getAllSubcriptionPlan();
+    SubscriptionPlan getBySuncriptionPlanCode(String subscriptionPlanCode) throws Exception;
 }

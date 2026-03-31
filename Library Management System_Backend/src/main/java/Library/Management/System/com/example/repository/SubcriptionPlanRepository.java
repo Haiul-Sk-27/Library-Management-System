@@ -11,4 +11,5 @@ public interface SubcriptionPlanRepository extends JpaRepository<SubscriptionPla
     // Find plan by plan code
     Optional<SubscriptionPlan> findByPlancode(String plancode);
 
+    SubscriptionPlan findByCode(String planCode);
 }
